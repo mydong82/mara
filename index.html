@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제1회 김.빡.씸. 단합회</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="container">
+        <!-- 시작 화면 -->
+        <section id="start-screen" class="screen active">
+            <header>
+                <h1>제1회 김.빡.씸. 단합회</h1>
+            </header>
+            <button id="start-btn">게임 시작</button>
+        </section>
+
+        <!-- 인원 선택 화면 -->
+        <section id="player-count-screen" class="screen">
+            <header>
+                <h2>팀 수를 선택하세요</h2>
+            </header>
+            <div class="button-group">
+                <button class="player-count-btn" data-count="2">2팀</button>
+                <button class="player-count-btn" data-count="3">3팀</button>
+                <button class="player-count-btn" data-count="4">4팀</button>
+                <button class="player-count-btn" data-count="5">5팀</button>
+            </div>
+            <footer>
+                <button id="player-count-back-btn" class="back-btn">뒤로가기</button>
+            </footer>
+        </section>
+
+        <!-- 팀 이름 입력 화면 -->
+        <section id="team-name-screen" class="screen">
+            <h2>팀 이름을 입력하세요</h2>
+            <div id="team-name-inputs"></div>
+            <button id="submit-teams-btn">확인</button>
+            <button id="team-name-back-btn" class="back-btn">뒤로가기</button>
+        </section>
+
+        <!-- 게임 선택 화면 -->
+        <section id="game-select-screen" class="screen">
+            <div id="game-select-scoreboard" class="scoreboard"></div> <!-- 게임 선택 화면 점수판 -->
+            <h2>게임을 선택하세요</h2>
+            <div class="button-group">
+                <button id="person-quiz-btn">
+                    <span class="game-title">인물 퀴즈</span>
+                    <div class="game-desc">🖼️</div>
+                </button>
+                <button id="chosung-quiz-btn">
+                    <span class="game-title">초성 퀴즈</span>
+                    <div class="game-desc">✍️</div>
+                </button>
+                <button id="continue-quiz-btn">
+                    <span class="game-title">이어서 말해요</span>
+                    <div class="game-desc">🗣️</div>
+                </button>
+                <!-- 다른 게임들은 여기에 추가 -->
+            </div>
+            <button id="game-select-back-btn" class="back-btn" data-target-screen="team-name-screen">뒤로가기</button>
+        </section>
+
+        <!-- 이어서 말해요 퀴즈 주제 선택 화면 -->
+        <section id="continue-topic-screen" class="screen">
+            <h2>이어서 말해요 퀴즈 주제를 선택하세요</h2>
+            <div class="button-group">
+                <button class="continue-topic-btn" data-topic="proverb">
+                    <span class="game-title">속담</span>
+                    <div class="game-desc">📖</div>
+                </button>
+                <button class="continue-topic-btn" data-topic="idiom">
+                    <span class="game-title">사자성어</span>
+                    <div class="game-desc">🤔</div>
+                </button>
+                <button class="continue-topic-btn" data-topic="fourChar">
+                    <span class="game-title">4단어</span>
+                    <div class="game-desc">✨</div>
+                </button>
+            </div>
+            <button id="continue-topic-back-btn">뒤로가기</button>
+        </section>
+
+        <!-- 이어서 말해요 퀴즈 게임 화면 -->
+        <section id="continue-quiz-screen" class="screen">
+            <div class="game-layout">
+                <div class="game-area">
+                    <h2 id="continue-quiz-title">이어서 말해요</h2>
+                    <div id="continue-quiz-content">
+                        <div id="continue-question-container">
+                            <div id="continue-question"></div>
+                            <div id="continue-answer-overlay"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar">
+                    <div id="continue-scoreboard" class="scoreboard"></div>
+                    <div class="bottom-controls">
+                        <div class="button-group navigation-buttons">
+                            <button id="continue-prev-btn">이전</button>
+                            <button id="continue-next-btn">다음</button>
+                        </div>
+                        <button id="continue-back-to-games-btn">게임 선택으로</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 초성 퀴즈 주제 선택 화면 -->
+        <section id="chosung-topic-screen" class="screen">
+            <h2>초성 퀴즈 주제를 선택하세요</h2>
+            <div class="button-group">
+                <button class="chosung-topic-btn" data-topic="movie">
+                    <span class="game-title">영화</span>
+                    <div class="game-desc">🎬</div>
+                </button>
+                <button class="chosung-topic-btn" data-topic="animal">
+                    <span class="game-title">동물</span>
+                    <div class="game-desc">🦁</div>
+                </button>
+                <button class="chosung-topic-btn" data-topic="snack">
+                    <span class="game-title">과자&amp;아이스크림</span>
+                    <div class="game-desc">🍪</div>
+                </button>
+                <button class="chosung-topic-btn" data-topic="drama">
+                    <span class="game-title">드라마</span>
+                    <div class="game-desc">📺</div>
+                </button>
+            </div>
+            <button id="chosung-topic-back-btn">뒤로가기</button>
+        </section>
+
+        <!-- 초성 퀴즈 게임 화면 -->
+        <section id="chosung-quiz-screen" class="screen">
+            <div class="game-layout">
+                <div class="game-area">
+                    <h2 id="chosung-quiz-title">초성 퀴즈</h2>
+                    <div id="chosung-quiz-content">
+                        <div id="chosung-question-container">
+                            <div id="chosung-question"></div>
+                            <div id="chosung-answer-overlay"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar">
+                    <div id="chosung-scoreboard" class="scoreboard"></div>
+                    <div class="bottom-controls">
+                        <div class="button-group navigation-buttons">
+                            <button id="chosung-prev-btn">이전</button>
+                            <button id="chosung-next-btn">다음</button>
+                        </div>
+                        <button id="chosung-back-to-games-btn">게임 선택으로</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 인물 퀴즈 화면 -->
+        <section id="person-quiz-screen" class="screen">
+            <div class="game-layout">
+                <div class="game-area">
+                    <h2 id="quiz-title">인물 퀴즈</h2>
+                    <div id="quiz-content">
+                        <div class="image-container">
+                            <img id="quiz-image" src="" alt="인물 사진">
+                            <div id="quiz-answer-overlay"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar">
+                    <div id="scoreboard" class="scoreboard">
+                        <!-- 점수판이 여기에 동적으로 생성됩니다 -->
+                    </div>
+                    <div class="bottom-controls">
+                        <div class="button-group navigation-buttons">
+                            <button id="prev-btn">이전</button>
+                            <button id="next-btn">다음</button>
+                        </div>
+                        <button id="back-to-games-btn">게임 선택으로</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Custom Confirmation Modal -->
+    <div id="confirmation-modal" class="modal-overlay">
+        <div class="modal-content">
+            <p>정말 뒤로 가시겠습니까?</p>
+            <div class="button-group">
+                <button id="confirm-yes-btn">예</button>
+                <button id="confirm-no-btn">아니오</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript 파일들 -->
+    <script src="js/data.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/games.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
