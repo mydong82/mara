@@ -7,12 +7,24 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- 전체화면 오버레이 -->
+    <div id="fullscreen-overlay" class="fullscreen-overlay">
+        <img id="fullscreen-image" class="fullscreen-image" src="" alt="">
+    </div>
+
     <main class="container">
         <!-- 시작 화면 -->
         <section id="start-screen" class="screen active">
             <header>
                 <h1>제1회 김.빡.씸. 단합회</h1>
             </header>
+            <div id="home-images-container" class="draggable-container">
+                <img src="images/home/도연.png" class="draggable-image" alt="도연">
+                <img src="images/home/아름.png" class="draggable-image" alt="아름">
+                <img src="images/home/다운.png" class="draggable-image" alt="다운">
+                <img src="images/home/예은.png" class="draggable-image" alt="예은">
+                <img src="images/home/예진.png" class="draggable-image" alt="예진">
+            </div>
             <button id="start-btn">게임 시작</button>
         </section>
 

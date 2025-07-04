@@ -252,4 +252,146 @@ class UIManager {
             overlay.style.opacity = '0';
         });
     }
-} 
+}
+
+// 드래그 기능 구현
+function initDraggableImages() {
+    const images = document.querySelectorAll('.draggable-image');
+    const fullscreenOverlay = document.getElementById('fullscreen-overlay');
+    const fullscreenImage = document.getElementById('fullscreen-image');
+    let activeImage = null;
+    let currentX;
+    let currentY;
+    let initialX;
+    let initialY;
+    let xOffset = 0;
+    let yOffset = 0;
+    let dragStartTime = 0;
+    let isLongPress = false;
+    const longPressDelay = 200; // 0.2초
+
+    // 전체화면 표시 함수
+    function showFullscreen(image) {
+        fullscreenImage.src = image.src;
+        fullscreenImage.alt = image.alt;
+        fullscreenOverlay.classList.add('active');
+    }
+
+    // 전체화면 숨기기 함수
+    function hideFullscreen() {
+        fullscreenOverlay.classList.remove('active');
+    }
+
+    // 터치 이벤트 핸들러
+    function handleTouchStart(e) {
+        if (e.touches.length === 1) {
+            const touch = e.touches[0];
+            dragStartTime = Date.now();
+            isLongPress = false;
+
+            if (e.target.classList.contains('draggable-image')) {
+                activeImage = e.target;
+                initialX = touch.clientX - xOffset;
+                initialY = touch.clientY - yOffset;
+
+                // 일정 시간 후에 전체화면 표시
+                setTimeout(() => {
+                    if (activeImage && !isLongPress && Math.abs(xOffset) < 10 && Math.abs(yOffset) < 10) {
+                        isLongPress = true;
+                        showFullscreen(activeImage);
+                    }
+                }, longPressDelay);
+            }
+        }
+    }
+
+    function handleTouchMove(e) {
+        if (activeImage && !isLongPress) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            currentX = touch.clientX - initialX;
+            currentY = touch.clientY - initialY;
+            xOffset = currentX;
+            yOffset = currentY;
+            
+            setTranslate(currentX, currentY, activeImage);
+        }
+    }
+
+    function handleTouchEnd() {
+        if (activeImage) {
+            if (isLongPress) {
+                hideFullscreen();
+            }
+            activeImage.classList.remove('dragging');
+            activeImage.style.transform = '';
+            activeImage = null;
+            isLongPress = false;
+        }
+        initialX = currentX;
+        initialY = currentY;
+    }
+
+    // 마우스 이벤트 핸들러
+    function handleMouseDown(e) {
+        if (e.target.classList.contains('draggable-image')) {
+            activeImage = e.target;
+            dragStartTime = Date.now();
+            isLongPress = false;
+
+            initialX = e.clientX - xOffset;
+            initialY = e.clientY - yOffset;
+
+            // 일정 시간 후에 전체화면 표시
+            setTimeout(() => {
+                if (activeImage && !isLongPress && Math.abs(xOffset) < 10 && Math.abs(yOffset) < 10) {
+                    isLongPress = true;
+                    showFullscreen(activeImage);
+                }
+            }, longPressDelay);
+        }
+    }
+
+    function handleMouseMove(e) {
+        if (activeImage && !isLongPress) {
+            e.preventDefault();
+            
+            currentX = e.clientX - initialX;
+            currentY = e.clientY - initialY;
+            xOffset = currentX;
+            yOffset = currentY;
+            
+            setTranslate(currentX, currentY, activeImage);
+        }
+    }
+
+    function handleMouseUp() {
+        if (activeImage) {
+            if (isLongPress) {
+                hideFullscreen();
+            }
+            activeImage.classList.remove('dragging');
+            activeImage.style.transform = '';
+            activeImage = null;
+            isLongPress = false;
+        }
+        initialX = currentX;
+        initialY = currentY;
+    }
+
+    function setTranslate(xPos, yPos, el) {
+        el.style.transform = `translate(${xPos}px, ${yPos}px)`;
+    }
+
+    // 이벤트 리스너 등록
+    document.addEventListener('touchstart', handleTouchStart, false);
+    document.addEventListener('touchmove', handleTouchMove, false);
+    document.addEventListener('touchend', handleTouchEnd, false);
+    
+    document.addEventListener('mousedown', handleMouseDown, false);
+    document.addEventListener('mousemove', handleMouseMove, false);
+    document.addEventListener('mouseup', handleMouseUp, false);
+}
+
+// 페이지 로드 시 드래그 기능 초기화
+document.addEventListener('DOMContentLoaded', initDraggableImages); 
